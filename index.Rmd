@@ -1,21 +1,35 @@
 ---
-title: "Plot Test"
+title: "Dropdown Test"
 author: "Nosa Lawani"
 date: "6/22/2021"
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
-library(tidyverse)
-library(bsselectR)
-```
-
 ```{r code for plots}
-# This can be code in place of the rds files. The plot must be assigned to an
-# R object.
+website <- read_html("https://www.iihs.org/topics/fatality-statistics/detail/teenagers#alcohol-involvement")
+alldata <- website %>% 
+  minimal_html() %>% 
+  html_elements("#alcohol-involvement .is-fullwidth:nth-child(4) th , #alcohol-involvement .is-fullwidth:nth-child(4) td") %>% 
+  html_text2() 
 
-plot1 <- read_rds("plot1.rds")
-plot2 <- read_rds("plot2.rds")
+  year <- alldata[seq(27, 520, 13)]
+  drivers_killed_16_17 <- alldata[seq(28, 520, 13)]
+  bac_16_17 <- alldata[seq(29, 520, 13)]
+  bac_perc_16_17 <- alldata[seq(30, 520, 13)]
+  drivers_killed_18_20 <- alldata[seq(31, 520, 13)]
+  bac_18_20 <- alldata[seq(32, 520, 13)]
+  bac_perc_18_20 <- alldata[seq(33, 520, 13)]
+  drivers_killed_21_30 <- alldata[seq(34, 520, 13)]
+  bac_21_30 <- alldata[seq(35, 520, 13)]
+  bac_perc_21_30 <- alldata[seq(36, 520, 13)]
+  drivers_killed_30 <- alldata[seq(37, 520, 13)]
+  bac_30 <- alldata[seq(38, 520, 13)]
+  bac_perc_30 <- alldata[seq(39, 520, 13)]
+  
+  tibble(year, drivers_killed_16_17, bac_16_17, bac_perc_16_17, 
+         drivers_killed_18_20, bac_18_20, bac_perc_18_20, 
+         drivers_killed_21_30, bac_21_30, bac_perc_21_30,
+         drivers_killed_30, bac_30, bac_perc_30) %>% 
+    mutate(across(everything(), ~ str_replace_all(., ",", "")))
 ```
 
 ```{r save images, include=FALSE}
