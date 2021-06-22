@@ -1,0 +1,41 @@
+---
+title: "Plot Test"
+author: "Nosa Lawani"
+date: "6/22/2021"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(tidyverse)
+library(bsselectR)
+```
+
+```{r code for plots}
+# This can be code in place of the rds files. The plot must be assigned to an
+# R object.
+
+plot1 <- read_rds("plot1.rds")
+plot2 <- read_rds("plot2.rds")
+```
+
+```{r save images, include=FALSE}
+# Save images to computer 
+
+ggsave("images/plot1.png", plot1)
+ggsave("images/plot2.png", plot2)
+
+
+# Make vector of files for menu. Name vector items the label you desire for the 
+# option in the menu. 
+
+plots <- c(`Plot 1` = "images/plot1.png",
+  `Plot 2` = "images/plot2.png")
+```
+
+```{r use bsselect}
+bsselect(plots, type = "img", selected = "Plot 1",
+         show_tick = TRUE)
+```
+
+
+
